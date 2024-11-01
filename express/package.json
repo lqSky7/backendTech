@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "@types/node": "^22.8.6",
+    "node": "^22.11.0"
+  },
+  "name": "testing",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev" : "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "ca5",
+  "license": "ISC",
+  "description": "exp"
+}
