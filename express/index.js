@@ -1,5 +1,6 @@
 import express from "express";
 const app = express();
+import('dotenv/config')
 
 // part of setup to tell express that we'll be using JSON
 app.use(express.json());
@@ -26,7 +27,7 @@ app.put("/tea/:id", (req, res) => {
 })
 
 // delete
-app.put("/tea/:id", (req, res) => {
+app.delete("/tea/:id", (req, res) => {
     const ele = teaArray.findIndex(e => e.id === parseInt(req.params.id));
     if(ele === -1) {   
         return res.status(404).send("not found")
@@ -67,5 +68,5 @@ app.get('/tea/:id', (req,res) => {
 
 console.log(teaArray);
 
-app.listen(3001, () => {console.log("listening");
+app.listen(process.env.PORT, () => {console.log("listening");
 })
