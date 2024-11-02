@@ -1,6 +1,31 @@
 import express from "express";
+import logger from "./logger.js";
+import morgan from "morgan";
+
+import dotenv from 'dotenv';
+dotenv.config();
+
+const morganFormat = ":method :url :status :response-time ms";
+
+
 const app = express();
-import('dotenv/config')
+
+app.use(
+    morgan(morganFormat, {
+      stream: {
+        write: (message) => {
+          const logObject = {
+            method: message.split(" ")[0],
+            url: message.split(" ")[1],
+            status: message.split(" ")[2],
+            responseTime: message.split(" ")[3],
+          };
+          logger.info(JSON.stringify(logObject));
+        },
+      },
+    })
+  );
+
 
 // part of setup to tell express that we'll be using JSON
 app.use(express.json());
@@ -14,6 +39,11 @@ let i = 1;
 
 // update element
 app.put("/tea/:id", (req, res) => {
+
+    // example: you can use logger.warn logger.info logger.log instead of console, it will also append the log file
+    logger.warn("An element was updated");
+
+
     const ele = teaArray.find(e => e.id === parseInt(req.params.id));
     if(!ele) {   
         return res.status(404).send("not found")
@@ -67,6 +97,9 @@ app.get('/tea/:id', (req,res) => {
 }) 
 
 console.log(teaArray);
+
+console.log(process.env.PORT);
+
 
 app.listen(process.env.PORT, () => {console.log("listening");
 })
