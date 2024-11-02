@@ -6,13 +6,38 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-
-
-
 //nodemon restarts server upon any change we make. use install it as a "development dependency"
 let teaArray = [];
 let i = 1;
 
+
+// update element
+app.put("/tea/:id", (req, res) => {
+    const ele = teaArray.find(e => e.id === parseInt(req.params.id));
+    if(!ele) {   
+        return res.status(404).send("not found")
+    }
+    else{ 
+        const {name, price} = req.body;
+        ele.name = name;
+        ele.price = price;
+        res.status(200).send(ele)
+    }
+})
+
+// delete
+app.put("/tea/:id", (req, res) => {
+    const ele = teaArray.findIndex(e => e.id === parseInt(req.params.id));
+    if(ele === -1) {   
+        return res.status(404).send("not found")
+    }
+    else{ 
+        teaArray.splice(ele, 1);
+        res.status(200).send("deleted")
+    }
+})
+
+// add tea element
 app.post("/tea", (req, res) => {
     const hi = req.body;
 
