@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "express": "^4.21.1",
+    "global": "^4.4.0",
+    "typescript": "^5.6.3"
+  }
+}
